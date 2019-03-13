@@ -1,11 +1,11 @@
 <template>
-  <div class="hello">
+  <div class="hello" style="background:#EEEEEE">
     <h1>{{ msg }}</h1>
     <h3 v-show="submited">Welcome {{playername}}</h3>
     <input v-show="!submited" v-model="playername" placeholder="Input your tag.">
     <button v-show="!submited" @click="submit_name">Join</button>
-    <button v-show="submited"  @click="Ready"> Ready</button>
-     <PlayerList :List="this.PlayersReady"/>
+    <button v-show="submited"  @click="Ready">{{is_ready?"Unready":"Ready"}} </button>
+     <PlayerList :Bool="this.PlayersReady" :Names="this.PlayersNames" />
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import PlayerList from '@/components/PlayerList'
 export default {
   name: 'EspionLobby',
-  props: ['PlayersReady'],
+  props: ['PlayersReady','PlayersNames'],
   data () {
     return {
       submited:false,

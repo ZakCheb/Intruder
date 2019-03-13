@@ -3,7 +3,7 @@
 <script>
 export default {
   // name:'PlayerList',
-   props:['List'],
+   props:['Bool','Names'],
    
    data(){
      return{
@@ -18,8 +18,8 @@ export default {
 
 <template>
   <div> PlayerList :
-     <li v-for="item in List">
-          {{ item }} => 
+     <li v-for="Name in Names">
+          {{ Name }}  is {{Bool[Name]?"Ready":"Unready"}}
     </li>
   </div>
 </template>

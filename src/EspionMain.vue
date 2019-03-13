@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <EspionLobby :PlayersReady="PlayersReady"/>
+    <EspionLobby :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
   </div>
 </template>
 
@@ -13,8 +13,10 @@ export default {
     return {
       websocket: new WebSocket("ws://127.0.0.1:8888"),
       Name:'',
-      PlayersReady: 'INITIAL',
+      PlayersReady: '',
       PlayersNames:{},
+      Faction:'',  //Faction of the player Revolu1/Spy0
+      gamestarted:false,
     }
   },
   methods:{
@@ -27,10 +29,19 @@ export default {
                 switch (data.type) {
                     case 'ready':
                         ref.PlayersReady=data.ready;
+                        console.log('Ready type',ref.PlayersReady)
                         break;
                     case 'users':
                         ref.PlayersNames=data.names;
                         console.log('Users type',ref.PlayersNames)
+                        break;
+                    case 'faction':
+                        ref.Faction=data.faction;
+                        setTimeout(()=>{
+                            ref.gamestarted=true;
+                        },3000)
+                        
+                        console.log(ref.Faction)
                         break;
                     default:
                         console.error("unsupported event", data);
