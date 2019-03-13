@@ -3,23 +3,23 @@
 <script>
 export default {
   // name:'PlayerList',
-   props:['players'],
+   props:['List'],
    
    data(){
      return{
        count:0
      }
    },
-   created:function() {
-     console.log('PlayerList:',players)
+    created() {    
+     console.log('PlayerList:',this.List)
    }
 }
 </script>
 
 <template>
-  <div> PlayerList  _:
-     <li v-for="item in players">
-          {{ item }}
+  <div> PlayerList :
+     <li v-for="item in List">
+          {{ item }} => 
     </li>
   </div>
 </template>

@@ -5,15 +5,15 @@
     <input v-show="!submited" v-model="playername" placeholder="Input your tag.">
     <button v-show="!submited" @click="submit_name">Join</button>
     <button v-show="submited"  @click="Ready"> Ready</button>
-     <PlayerList :players="Players_Ready"/>
+     <PlayerList :List="this.PlayersReady"/>
   </div>
 </template>
 
 <script>
 import PlayerList from '@/components/PlayerList'
 export default {
-  name: 'Espion_Lobby',
-  props: ['Players_Ready'],
+  name: 'EspionLobby',
+  props: ['PlayersReady'],
   data () {
     return {
       submited:false,
@@ -25,6 +25,9 @@ export default {
     components: {
     PlayerList,
   },
+  mounted() {
+    console.log('Lobby UPDATED PlayersReady',this.PlayersReady)
+  },
   methods: {
     submit_name(){
       //Check if Name empty or forbidden
@@ -35,14 +38,13 @@ export default {
       this.$parent.Name=this.playername;     
       // Send it to the server
       this.$parent.websocket.send(JSON.stringify({Name: this.playername}));
-      console.log(this.$parent);
       this.submited = true;
-      //router.replace(  
+
     },
     Ready(){
       this.is_ready = !this.is_ready;
       this.$parent.websocket.send(JSON.stringify({Ready: this.is_ready}));
-      console.log("Parernt>",this.$parent.Players_Ready)
+      console.log("Lobby PlayerReady PROP:",this.PlayersReady)
     }
   }
 }

@@ -1,44 +1,43 @@
 <template>
   <div id="app">
-    
-    <Espion_Lobby :Players_Ready="Players_Ready"/>
+    <EspionLobby :PlayersReady="PlayersReady"/>
   </div>
 </template>
 
 <script>
-import Espion_Lobby from '@/components/Espion_Lobby'
+import EspionLobby from '@/components/EspionLobby'
 //<img src="./assets/logo.png">
-//import PlayerList from
 export default {
-  name: 'Espion_Main',
+  name: 'EspionMain',
     data () {
     return {
-      websocket: new WebSocket("ws://127.0.0.1:8888/"),
+      websocket: new WebSocket("ws://127.0.0.1:8888"),
       Name:'',
-      Players_Ready:{},
-      Players_Names:{},
+      PlayersReady: 'INITIAL',
+      PlayersNames:{},
     }
   },
+  methods:{
+  }
+  ,
   created:function(){
+      var ref = this;// keep the Vue instance scope inside the callback.
         this.websocket.onmessage = function (event) {
-                //console.log(event)
-                let data = JSON.parse(event.data);
-                //console.log(data);
+                let data = JSON.parse(event.data);                
                 switch (data.type) {
                     case 'ready':
-                        this.Players_Ready=data.ready
-                        console.log("Ready type",data.ready)
+                        ref.PlayersReady=data.ready;
                         break;
                     case 'users':
-                        this.Players_Names=data.names
-                        console.log('Users type',this.Players_Names)
+                        ref.PlayersNames=data.names;
+                        console.log('Users type',ref.PlayersNames)
                         break;
                     default:
                         console.error("unsupported event", data);
                 }
     }
   },
-  components:{Espion_Lobby}  
+  components:{EspionLobby}  
 }
 </script>
 
