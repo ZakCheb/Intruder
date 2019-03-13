@@ -1,11 +1,11 @@
 <template>
   <div class="hello" style="background:#EEEEEE">
-    <h1>{{ msg }}</h1>
+    
     <h3 v-show="submited">Welcome {{playername}}</h3>
     <input v-show="!submited" v-model="playername" placeholder="Input your tag.">
     <button v-show="!submited" @click="submit_name">Join</button>
     <button v-show="submited"  @click="Ready">{{is_ready?"Unready":"Ready"}} </button>
-     <PlayerList :Bool="this.PlayersReady" :Names="this.PlayersNames" />
+     <PlayerList :Bool="this.PlayersReady" :Names="this.PlayersNames" :Text="['Ready','Unready']"/>
   </div>
 </template>
 
@@ -13,12 +13,11 @@
 import PlayerList from '@/components/PlayerList'
 export default {
   name: 'EspionLobby',
-  props: ['PlayersReady','PlayersNames'],
+  props: ['PlayersReady','PlayersNames','ws'],
   data () {
     return {
       submited:false,
       is_ready:false,
-      msg: 'Spy game.',
       playername : '',
     }
   },
@@ -37,13 +36,13 @@ export default {
       }
       this.$parent.Name=this.playername;     
       // Send it to the server
-      this.$parent.websocket.send(JSON.stringify({Name: this.playername}));
+      this.ws.send(JSON.stringify({Name: this.playername}));
       this.submited = true;
 
     },
     Ready(){
       this.is_ready = !this.is_ready;
-      this.$parent.websocket.send(JSON.stringify({Ready: this.is_ready}));
+      this.ws.send(JSON.stringify({Ready: this.is_ready}));
       console.log("Lobby PlayerReady PROP:",this.PlayersReady)
     }
   }

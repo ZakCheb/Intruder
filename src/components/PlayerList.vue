@@ -3,7 +3,7 @@
 <script>
 export default {
   // name:'PlayerList',
-   props:['Bool','Names'],
+   props:['Bool','Names','Text'],
    
    data(){
      return{
@@ -19,7 +19,7 @@ export default {
 <template>
   <div> PlayerList :
      <li v-for="Name in Names">
-          {{ Name }}  is {{Bool[Name]?"Ready":"Unready"}}
+          {{ Name }}   <span v-show="Bool[Name] != undefined">{{Bool[Name]?Text[0]:Text[1]}}</span>
     </li>
   </div>
 </template>
