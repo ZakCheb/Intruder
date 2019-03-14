@@ -4,7 +4,7 @@
 import PlayerList from './PlayerList.vue'
 export default {
   
-   props:['Turn','Names','Selected','PlayerName'],
+   props:['ws','Turn','Names','Selected','PlayerName','NUMBER_OF_PLAYER_IN_TEAM'],
    components:{
        PlayerList
    },
@@ -18,13 +18,21 @@ export default {
    },
    methods:{  
        SelectedToGoMission:function(Player){
+           if( this.Turn  != this.PlayerName){
+               return ;
+           }
             if (this.Selected.indexOf(Player) == -1){ // if the player is not selected yet
                 if(this.Selected.length < this.NUMBER_OF_PLAYER_IN_TEAM ) {
+                    console.log('Selected ',Player);
                     this.Selected.push(Player)
+                    this.ws.send(JSON.stringify({Selected: this.Selected}));
+                    
                 }
             }
             else{
                 this.Selected.pop(Player)
+                console.log('Unselected ',Player);
+                this.ws.send(JSON.stringify({Selected: this.Selected}));
             }
             console.log('SelectGoMission ',Player);
             }
@@ -37,7 +45,14 @@ export default {
   <div class="MissionBox">  
     
       <h3>{{Turn}} choosing who go to Mission</h3>
-            <PlayerList :Names="Names" :Bool="[1,1,1]" v-on:NameClicked="SelectedToGoMission" :Text="['Accepted','Refused']"/>
+            {{this.Selected}}
+            <ul>
+     <li v-for="Name in Names" :key="Name">
+        <span  @click="SelectedToGoMission(Name)"> 
+           {{ Name }}  
+        </span>
+      </li>
+    </ul>
   
   </div>
 </template>
