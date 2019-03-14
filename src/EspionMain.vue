@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <EspionLobby v-show="!gamestarted"  :ws="websocket"   :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
-    <EspionInGame v-show="gamestarted" :ws="websocket"   :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"/>
+    <EspionInGame v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"/>
     <Footer/>
   </div>
 </template>
