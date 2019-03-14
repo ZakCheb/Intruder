@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <EspionLobby v-show="!gamestarted"  :ws="websocket"   :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
-    <EspionInGame v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"/>
+    <EspionInGame :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"/>
     <Footer/>
   </div>
 </template>
@@ -20,13 +20,17 @@ export default {
       websocket: new WebSocket("ws://127.0.0.1:8888"),
       gamestarted:false,
 
-      Name:'',
-      
+      PlayerName:'',
+      //Lobby
       PlayersReady: {},
       PlayersNames:{},
+      //Votes
+      //GoToMission
+      Turn:"",
       Faction:'',  //Faction of the player Revolu1/Spy0
       Votes:{},
       Votes_Results:{},
+
       
     }
   },
@@ -64,7 +68,10 @@ export default {
                         console.log('Votes type',ref.Votes_Results)
                         ref.Votes={};
                         break;
-                      
+                    case 'turn':
+                        ref.Turn=data.turn;
+                        console.log('Turn type',ref.turn)
+                    break;
                     default:
                         console.error("unsupported event", data);
                 }
@@ -131,7 +138,7 @@ table {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
 }
 /* RESET */
 

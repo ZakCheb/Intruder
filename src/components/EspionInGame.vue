@@ -1,9 +1,15 @@
 <script>
 import ShowFaction from './ShowFaction.vue'
 import Vote from './Vote.vue' 
+import GoToMission from './GoToMission.vue'
 export default{
-    props:['Names','Votes','ws','Faction',"Votes_Results"],
-    components:{ShowFaction,Vote}
+    props:['Names','Votes','ws','Faction',"Votes_Results","Turn","PlayerName"],
+    components:{ShowFaction,Vote,GoToMission},
+    data(){
+        return{
+            NUMBER_OF_PLAYER_IN_TEAM:2
+        }
+    }
 }
 
 </script>
@@ -12,7 +18,9 @@ export default{
 
 <div>
     Game
-    <Vote :Names="Names" :Votes="Votes" :ws="ws" :Votes_Results="Votes_Results"/>
-    <ShowFaction :Faction="Faction"/>
+    <ShowFaction :PlayerName="PlayerName" :Faction="Faction"/>
+    
+    <GoToMission :PlayerName="PlayerName" :Names="Names" :ws="ws" :Turn="Turn" :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
+    <Vote :Names="Names" :Votes="Votes" :ws="ws" :Votes_Results="Votes_Results" />
 </div>
 </template>

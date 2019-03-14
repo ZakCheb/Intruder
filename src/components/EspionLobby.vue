@@ -34,7 +34,7 @@ export default {
         console.log('Empty name.')
         return 1 ;
       }
-      this.$parent.Name=this.playername;     
+      this.$parent.PlayerName=this.playername;     
       // Send it to the server
       this.ws.send(JSON.stringify({Name: this.playername}));
       this.submited = true;

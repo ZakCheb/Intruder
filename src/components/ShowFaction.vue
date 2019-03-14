@@ -1,6 +1,6 @@
 <script>
 export default{
-    props:['Faction'],
+    props:['Faction','PlayerName'],
     data(){
         return{
             show:true
@@ -11,5 +11,14 @@ export default{
 </script>
 
 <template>
-<span @click="show=!show" >My Faction :<span v-show="show" >{{Faction?"Révolutionaire":"Espion"}}</span> </span>
+<div class="faction" @click="show=!show" >{{PlayerName}} =>
+    <span v-show="show" >
+        {{Faction?"Révolutionaire":"Espion"}}
+        </span> 
+</div>
 </template>
+<style>
+.faction{
+    border: 1px dotted black;
+}
+</style>
