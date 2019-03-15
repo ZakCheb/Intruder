@@ -1,16 +1,21 @@
 <script>
 export default{
+    props: ['Votes_Results'],
     data(){
         return{
             title: 'Spy game.',
         }
     }
-    //<img src="./assets/logo.png">
+    //
 }
 
 </script>
 <template>
+<div>
 <h1 class="title" style="text-align: center;background:#EEE;">{{title}}</h1>
+
+    
+</div>
 </template>
 
 <style>

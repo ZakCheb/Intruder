@@ -5,10 +5,12 @@
     <!-- Compiled and minified CSS -->
     
            
-    <Header/>
+    <Header :Votes_Resutls="Votes_Results" />
     <EspionLobby v-show="!gamestarted"  :ws="websocket"   :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
-    <EspionInGame :Selected="Selected" :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"  :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
+    <EspionInGame :History="History" :Selected="Selected" :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"  :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
     <Footer/>
+
+    
   </div>
 </template>
 
@@ -39,12 +41,22 @@ export default {
       Faction:'',  //Faction of the player Revolu1/Spy0
       Selected:[],
       //Choice
-      Decide:'' // Fail0/Success1
-
+      Decide:'', // Fail0/Success1
       
+      //History
+      Round:1,
+      History:[],
+
     }
   },
   methods:{
+    UpdateHistory(v){
+      v['Turn'] = this.Turn;
+      v['Round'] = this.Round;
+      v.Selected = this.Selected;
+      this.History.push(v);
+      this.Round++;
+    }
   }
   ,
   created:function(){ //When page loaded
@@ -75,6 +87,7 @@ export default {
                         break;
                     case 'vote_result':
                         ref.Votes_Results=data.vote_result;
+                        ref.UpdateHistory(data.vote_result);
                         console.log('Votes type',ref.Votes_Results)
                         ref.Votes={};
                         break;
@@ -110,6 +123,6 @@ export default {
   width:350px;
 
 }
-/* RESET */
+
 
 </style>

@@ -1,12 +1,17 @@
 <template>
-  <div class="hello" style="background:#EEEEEE">
+  <div class="hello" style="">
+    
+    <img src="../assets/logo.png">
+    
     <h3 v-show="submited">Welcome {{playername}}</h3>
+    
     <input v-show="!submited" v-model="playername" placeholder="Input your tag." >
-
-
-
+    
     <div class="waves-effect waves-light btn center" v-show="!submited" @click="submit_name">Join</div>
-    <button class="waves-effect waves-light btn center" v-show="submited"  @click="Ready">{{is_ready?"Unready":"Ready"}} </button>
+    
+    <button class="waves-effect waves-light btn center" v-show="submited" 
+     @click="Ready">{{is_ready?"Unready":"Ready"}} </button>
+     
     <PlayerList :Bool="this.PlayersReady" :Names="this.PlayersNames" :Text="['Ready','Unready']"/>
   </div>
 </template>

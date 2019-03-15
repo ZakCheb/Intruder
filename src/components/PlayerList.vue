@@ -11,7 +11,7 @@ export default {
 <template>
 
   <div class="comp" v-show="Names.length != 0"> 
-    PlayerList :
+    
 
     <ul class="collection">
      <li v-for="Name in Names" :key="Name" class="collection-item" v-bind:class="{active:Bool[Name]}">

@@ -7,8 +7,6 @@ export default{
 
 <template>
 <div>
-    Failure:{{Votes_Results.Failure}}
-    Success:{{Votes_Results.Success}}
 
 
 </div>
