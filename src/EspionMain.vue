@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <EspionLobby v-show="!gamestarted"  :ws="websocket"   :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
-    <EspionInGame :Selected="Selected" :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"/>
+    <EspionInGame :Selected="Selected" :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"  :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
     <Footer/>
   </div>
 </template>
@@ -28,9 +28,12 @@ export default {
       Votes:{},
       Votes_Results:{},
       //GoToMission
-      Turn:"",
+      NUMBER_OF_PLAYER_IN_TEAM:2,
+      Turn:"", // wich person who select team
       Faction:'',  //Faction of the player Revolu1/Spy0
       Selected:[],
+      //Choice
+      Decide:'' // Fail0/Success1
 
       
     }
@@ -38,9 +41,9 @@ export default {
   methods:{
   }
   ,
-  created:function(){
+  created:function(){ //When page loaded
       var ref = this;// keep the Vue instance scope inside the callback.
-        this.websocket.onmessage = function (event) {
+        this.websocket.onmessage = function (event) { // on receiving message from server
                 let data = JSON.parse(event.data);                
                 console.log('UI RECEIVE:',data)
                 switch (data.type) {

@@ -8,16 +8,19 @@ export default{
         Voted(V){
             console.log({Vote: V})
             this.ws.send(JSON.stringify({Votes: V}));
+            
         }
         
     },
     data(){
         return{
-            Selected:[]
+            Selected:[],
+          
         }
 
-    }
-
+    },
+    
+ 
 }
 
 </script>
@@ -25,9 +28,10 @@ export default{
 <template>
 
 <div class="votebox" >
+    {{Votes_Results.Y != undefined}}
     <h3> Vote if you accept the mission crew.</h3>
     <PlayerList  :Selected="Selected" :Bool="Votes" :Names="Names" :Text="['Accepted','Refused']"/>
-    <h2 v-show="Votes_Results != undefined">Vote {{Votes_Results.Yes>Votes_Results.No?"Accepted.":"Rejected."}}  </h2>
+    <h2 v-show="Votes_Results.Y != undefined">Vote {{Votes_Results.Yes>Votes_Results.No?"Accepted.":"Rejected."}}  </h2>
     <button @click="Voted(false)">Refuse</button><button @click="Voted(true)">Accept</button>
   
 </div>
