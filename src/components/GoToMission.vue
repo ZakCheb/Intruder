@@ -47,14 +47,15 @@ export default {
     
   <div class="MissionBox">  
    
-      <h3>{{Turn}} is choosing who go to Mission</h3>
+      <h5>{{Turn}} select {{NUMBER_OF_PLAYER_IN_TEAM}} mission crew</h5>
            Mission Crew: <span v-for="crew in Selected" > {{crew}} </span>
-            <ul>
-     <li v-for="Name in Names" :key="Name">
-        <span  @click="SelectedToGoMission(Name)"> 
+    <ul class="collection">
+       <li v-for="Name in Names" :key="Name" class="collection-item"  v-bind:class="{active:Selected.indexOf(Name) > -1}"
+        @click="SelectedToGoMission(Name)">
+        <span  > 
            {{ Name }}  
         </span>
-      </li>
+        </li>
     </ul>
 
   

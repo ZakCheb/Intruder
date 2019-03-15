@@ -28,11 +28,10 @@ export default{
 <template>
 
 <div class="votebox" >
-    {{Votes_Results.Y != undefined}}
-    <h3> Vote if you accept the mission crew.</h3>
+    <h5> Vote if you accept the mission crew.</h5>
     <PlayerList  :Selected="Selected" :Bool="Votes" :Names="Names" :Text="['Accepted','Refused']"/>
     <h2 v-show="Votes_Results.Y != undefined">Vote {{Votes_Results.Yes>Votes_Results.No?"Accepted.":"Rejected."}}  </h2>
-    <button @click="Voted(false)">Refuse</button><button @click="Voted(true)">Accept</button>
+    <button class="waves-effect waves-light btn" @click="Voted(false)">Refuse</button><button class="waves-effect waves-light btn" @click="Voted(true)">Accept</button>
   
 </div>
 </template>

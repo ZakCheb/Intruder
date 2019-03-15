@@ -22,8 +22,9 @@ export default{
 <div>
     <ShowFaction :PlayerName="PlayerName" :Faction="Faction"/>    
     <GoToMission :Selected="Selected" :PlayerName="PlayerName" :Names="Names" :ws="ws" :Turn="Turn" :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
-    <Choice :PlayerName="PlayerName" :ws="ws" />
+    
     <Vote :Names="Names" :Votes="Votes" :ws="ws" :Votes_Results="Votes_Results" />
+    <Choice :PlayerName="PlayerName" :ws="ws" />
     <Result :Votes_Results="Votes_Results" />
 </div>
 </template>

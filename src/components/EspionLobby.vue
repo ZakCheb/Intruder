@@ -1,11 +1,13 @@
 <template>
   <div class="hello" style="background:#EEEEEE">
-    
     <h3 v-show="submited">Welcome {{playername}}</h3>
-    <input v-show="!submited" v-model="playername" placeholder="Input your tag.">
-    <button v-show="!submited" @click="submit_name">Join</button>
-    <button v-show="submited"  @click="Ready">{{is_ready?"Unready":"Ready"}} </button>
-     <PlayerList :Bool="this.PlayersReady" :Names="this.PlayersNames" :Text="['Ready','Unready']"/>
+    <input v-show="!submited" v-model="playername" placeholder="Input your tag." >
+
+
+
+    <div class="waves-effect waves-light btn center" v-show="!submited" @click="submit_name">Join</div>
+    <button class="waves-effect waves-light btn center" v-show="submited"  @click="Ready">{{is_ready?"Unready":"Ready"}} </button>
+    <PlayerList :Bool="this.PlayersReady" :Names="this.PlayersNames" :Text="['Ready','Unready']"/>
   </div>
 </template>
 
@@ -51,6 +53,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.center{
+  text-align: center;
+}
 h1, h2 {
   font-weight: normal;
 }

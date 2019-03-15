@@ -5,28 +5,19 @@ export default {
   // name:'PlayerList',
    props:['Bool','Names','Text','Selected'],
    
-   data(){
-     return{
-       Is_Selected:[]
-     }
-   },
-    updated() {    
-     //console.log('PlayerList:',this.List)
-   },
-   methods:{
-   }
 }
 </script>
 
 <template>
-  <div class="comp" > 
+
+  <div class="comp" v-show="Names.length != 0"> 
     PlayerList :
-    
-    <ul>
-     <li v-for="Name in Names" :key="Name">
+
+    <ul class="collection">
+     <li v-for="Name in Names" :key="Name" class="collection-item" v-bind:class="{active:Bool[Name]}">
         <span  @click="$emit('NameClicked',Name)"> 
            {{ Name }}  
-            <span v-show="Bool[Name] != undefined">
+            <span v-show="Bool[Name] != undefined" class="right" >
               {{Bool[Name]?Text[0]:Text[1]}}</span></span>
       </li>
     </ul>
@@ -41,5 +32,7 @@ export default {
 .green{
   color: #11EE11;
 }
-
+.right {
+  text-align: right;
+}
 </style>
