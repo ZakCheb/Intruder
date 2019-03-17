@@ -1,6 +1,12 @@
 <template>
   
   <div id="app">
+    <span v-show="!Connected" id="ConnectionBar">
+    <input class="border"  
+v-model="ServerAddress" placeholder="Server-address:Port" style="width:300px;">
+<button class="waves-effect waves-light btn center" @click="TryToConnect()">GO</button>
+Hit GO. to connect. do not refresh page when this bar goes off.
+</span>
     
     <Header :Votes_Resutls="Votes_Results" />
     <EspionLobby v-show="!gamestarted"  :ws="websocket"   :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
@@ -12,7 +18,7 @@
 </template>
 
 <script>
-
+var dynamics=require("dynamics.js")
  M.AutoInit();  //Materialaze CSS init
 import EspionLobby from '@/components/EspionLobby'
 import EspionInGame from '@/components/EspionInGame'
@@ -23,7 +29,9 @@ export default {
   name: 'EspionMain',
     data () {
     return {
-      websocket: new WebSocket("ws://127.0.0.1:8888"),
+      Connected:false,
+      ServerAddress:"",
+      websocket:"",
       gamestarted:false,
 
       PlayerName:'', // current player
@@ -48,17 +56,23 @@ export default {
     }
   },
   methods:{
+    TryToConnect(){
+      let a="ws://"+this.ServerAddress;
+      console.log("Trying to connect to ",a);
+      this.websocket=new WebSocket(a);
+      console.log(this.websocket)
+      this.WaitForData()
+    },
     UpdateHistory(v){
       v['Turn'] = this.Turn;
       v['Round'] = this.Round;
       v.Selected = this.Selected;
       this.History.push(v);
       this.Round++;
-    }
-  }
-  ,
-  created:function(){ //When page loaded
+    },
+    WaitForData(){
       var ref = this;// keep the Vue instance scope inside the callback.
+        console.log(ref)
         this.websocket.onmessage = function (event) { // on receiving message from server
                 let data = JSON.parse(event.data);                
                 console.log('UI RECEIVE:',data)
@@ -101,11 +115,22 @@ export default {
                         ref.NUMBER_OF_PLAYER_IN_TEAM = data.params.NUMBER_OF_PLAYER_IN_TEAM;
                         console.log('params type',ref.NUMBER_OF_PLAYER_IN_TEAM)
                     break;
+                    case 'connected':
+                         console.log("Server Connected");
+                         ref.ServerAddress="Connected! "
+                         setTimeout(()=>{
+                            ref.Connected=true; 
+                        },1000);
+                           
+                         break;
                     default:
                         console.error("unsupported event", data);
-                }
-    }
-  },
+                  }//Switch
+                }// Callback
+        }//WaitForData      
+  
+  
+    },//Method
   components:{Header,Footer,EspionLobby,EspionInGame}  
 }
 </script>
@@ -120,8 +145,6 @@ export default {
   color: #2c3e50;
   margin-top:0px;
 }
-
-
 
 
 </style>

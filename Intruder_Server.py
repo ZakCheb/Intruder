@@ -152,6 +152,8 @@ async def Count_Votes():
     ############################
     
 async def MainLoop(websocket, path): ## Every player start here.
+
+    await websocket.send(json.dumps({'type': 'connected'}))
     global SELECTED 
     await Send(NAMES,'names')
     if not GameStarted:

@@ -9,7 +9,7 @@ export default{
 
 
     props:['Names','Votes','ws','Faction',"Votes_Results","Turn",
-    'History',"PlayerName","Selected","Decide","NUMBER_OF_PLAYER_IN_TEAM"],
+    'History',"PlayerName","Selected","NUMBER_OF_PLAYER_IN_TEAM"],
 
 
     components:{Result,ShowFaction,Vote,GoToMission,Choice,HistoryView},
