@@ -23,12 +23,12 @@ Require npm.
 Instalation:
 ``` bash
 cat install.sh # for paranoids
-sudo chmod +x install.sh 
+./install.sh
 ```
-And finally:
+And finally, to start the Interface:
 ```bash
 npm start 
 ```
-Go to browser at localhost:8080.
+Go to browser at localhost:8080
 
 IMPORTANT: Once in a game, do not REFRESH the tab! or ask to every player to refresh aswell and restart the whole game.
