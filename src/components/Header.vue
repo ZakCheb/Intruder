@@ -20,7 +20,8 @@ export default{
 
 <style>
 .title{
+    margin-top: 20px;
     text-align: center;
-    background:#EEE;
+    background:rgb(253, 178, 178);
 }
 </style>

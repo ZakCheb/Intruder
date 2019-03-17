@@ -26,7 +26,7 @@ export default {
 
 <style>
 .comp{
-   border: 2px solid red;
+   /*border: 2px solid red;*/
    border-radius: 3px;
 }
 .green{

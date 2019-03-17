@@ -22,6 +22,7 @@ export default{
             }
             else{
                 console.log({Vote: V})
+                this.Selected=[];
                 this.ws.send(JSON.stringify({Votes: V}));
             
             }
@@ -39,6 +40,7 @@ export default{
                 else{
                     console.log("Last Vote",{Vote: V})
                     this.ws.send(JSON.stringify({Votes: V}));
+                    this.Selected=[];
                     this.Timer =5;
                     this.ActiveTimer =false;
                 }
@@ -62,7 +64,7 @@ export default{
 
 <template>
 
-<div class="votebox" >
+<div class="" >
     
     <h5> Vote if you accept the mission crew.</h5>
     <PlayerList  :Selected="Selected" :Bool="Votes" :Names="Names" :Text="['Accepted','Refused']"/>

@@ -1,10 +1,7 @@
 <template>
-
-  <div id="app" class="container">
-
-    <!-- Compiled and minified CSS -->
+  
+  <div id="app">
     
-           
     <Header :Votes_Resutls="Votes_Results" />
     <EspionLobby v-show="!gamestarted"  :ws="websocket"   :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
     <EspionInGame :History="History" :Selected="Selected" :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"  :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
@@ -15,6 +12,7 @@
 </template>
 
 <script>
+
  M.AutoInit();  //Materialaze CSS init
 import EspionLobby from '@/components/EspionLobby'
 import EspionInGame from '@/components/EspionInGame'
@@ -42,7 +40,7 @@ export default {
       Selected:[],
       //Choice
       Decide:'', // Fail0/Success1
-      
+      dynamics:require("dynamics.js"),
       //History
       Round:1,
       History:[],
@@ -120,9 +118,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #2c3e50;
-  width:350px;
-
+  margin-top:0px;
 }
+
+
 
 
 </style>

@@ -8,11 +8,6 @@ export default {
    components:{
        PlayerList
    },
-   data(){
-     return{
-       Is_Selected:[]
-     }
-   },
     updated() {    
   
    },
@@ -41,7 +36,7 @@ export default {
 
 <template>
     
-  <div class="MissionBox col s1" >  
+  <div class="" >  
    
       <h5>{{Turn}} select {{NUMBER_OF_PLAYER_IN_TEAM}} mission crew</h5>
            Mission Crew: <span v-for="crew in Selected" > {{crew}} </span>

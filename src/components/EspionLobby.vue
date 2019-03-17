@@ -1,16 +1,25 @@
 <template>
-  <div class="hello" style="">
+  <div class="lobby">
+    <div><img src="../assets/logo.png" ></div>
+    <div>    <input class="border" v-show="!submited" 
+             v-model="playername" placeholder="Input your tag." >
     
-    <img src="../assets/logo.png">
-    
-    <h3 v-show="submited">Welcome {{playername}}</h3>
-    
-    <input v-show="!submited" v-model="playername" placeholder="Input your tag." >
-    
-    <div class="waves-effect waves-light btn center" v-show="!submited" @click="submit_name">Join</div>
-    
-    <button class="waves-effect waves-light btn center" v-show="submited" 
+            <div class="waves-effect waves-light btn center" v-show="!submited" 
+            @click="submit_name">Join</div>
+            <h3 v-show="submited">Welcome {{playername}}</h3>
+                <h4 v-show="submited">Ready up.<br></h4><button class="waves-effect waves-light btn center" v-show="submited" 
      @click="Ready">{{is_ready?"Unready":"Ready"}} </button>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
      
     <PlayerList :Bool="this.PlayersReady" :Names="this.PlayersNames" :Text="['Ready','Unready']"/>
   </div>
@@ -60,6 +69,13 @@ export default {
 <style scoped>
 .center{
   text-align: center;
+}
+.border{
+  border-color:red;
+}
+.lobby{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 h1, h2 {
   font-weight: normal;

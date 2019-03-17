@@ -12,9 +12,9 @@ export default{
 
 <template>
 <div class="col s1" >
-<div class="faction" @click="show=!show" >{{PlayerName}} =>
+<div class="faction" @click="show=!show" >{{PlayerName}}
     <span v-show="show" >
-        {{Faction?"Révolutionaire  (Click to Hide)":"Espion  (Click to Hide)"}}
+        {{Faction?" => Révolutionaire  (Click to Hide)":" => Espion  (Click to Hide)"}}
         </span> 
 </div>
 </div>
