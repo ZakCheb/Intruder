@@ -10,7 +10,7 @@ Hit GO. to connect. do not refresh page when this bar goes off.
     
     <Header :Votes_Resutls="Votes_Results" />
     <EspionLobby v-show="!gamestarted"  :ws="websocket"   :PlayersReady="PlayersReady" :PlayersNames="PlayersNames"/>
-    <EspionInGame :History="History" :Selected="Selected" :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"  :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
+    <EspionInGame :Timer="Timer":History="History" :Selected="Selected" :PlayerName="PlayerName" :Turn="Turn" v-show="gamestarted" :ws="websocket" :Faction="Faction"  :Names="PlayersNames" :Votes="Votes" :Votes_Results="Votes_Results"  :NUMBER_OF_PLAYER_IN_TEAM="NUMBER_OF_PLAYER_IN_TEAM"/>
     <Footer/>
 
     
@@ -41,6 +41,7 @@ export default {
       //Votes
       Votes:{},
       Votes_Results:{},
+      Timer:-1,
       //GoToMission
       NUMBER_OF_PLAYER_IN_TEAM:88,
       Turn:"", // wich person who select team
@@ -97,6 +98,13 @@ export default {
                         ref.Votes=data.votes;
                         console.log('Votes type',ref.Votes)
                         break;
+                    case 'vote_accepted':
+                        ref.Timer=data.vote_accepted.timer;
+                        console.log("Vote Accepted. Time to choose Decide the faith of the mission!");
+                        setTimeout(()=>{
+                              ref.Timer=-1;
+                        },ref.Timer*1000);
+                    break;
                     case 'vote_result':
                         ref.Votes_Results=data.vote_result;
                         ref.UpdateHistory(data.vote_result);

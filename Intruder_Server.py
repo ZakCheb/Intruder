@@ -3,7 +3,7 @@ import json
 import logging
 import websockets
 import random as ran
-
+import time
 #I'm aware about the the dirty globals.
 NUMBER_OF_ESPION=2
 SERVER_PORT=8888
@@ -13,13 +13,13 @@ logging.basicConfig()
 GameStarted=False
 USERS  = list() # Websockets, index like names.
 NAMES  = list() # Names of the players.
-VOTES  = dict()  
+VOTES  = dict()
 READY  = dict() # Are players Ready
 FACTION = dict() # Revolutionary/Spy 1/0
 DECIDE = dict() # Decide either to Succed (1) the mission or to fail (0) it.
 SELECTED = list() # Wich players are selected to go to mission
 Turn=0 # current index of player who choose the team who go to mission.
-
+Timer=5 # Wait time to vote.
 ##### Fire config########
 import fire
 def Setup(port=8888,spy=1,team=2,minimum=2):
@@ -31,7 +31,7 @@ def Setup(port=8888,spy=1,team=2,minimum=2):
     SERVER_PORT=port
     global MINIMUM_PLAYERS
     MINIMUM_PLAYERS=minimum
-    
+
 fire.Fire(Setup)
 ###############################
 
@@ -89,7 +89,7 @@ async def GenerateFaction():
         if READY[name] == False :
             return False
     GameStarted=True
-    
+
     ##GENERATE  ESPION LOGIC##
     for name in NAMES :
         FACTION[name]=1 # All Revolutionary
@@ -102,11 +102,11 @@ async def GenerateFaction():
             i-=1
         i+=1
     print(FACTION)
-    
+
     ##################
     print('Game Started.')
     await Send_Faction()
-    await Send(NAMES[Turn],'turn') # Send the turn of wich player to vote a team.    
+    await Send(NAMES[Turn],'turn') # Send the turn of wich player to vote a team.
 
 
 async def Count_Votes():
@@ -123,42 +123,50 @@ async def Count_Votes():
             else :
                 n+=1
     ######################
-    
+
     ##### Game Logic ######
-    if len(NAMES) == len(VOTES) and len(SELECTED) == NUMBER_OF_PLAYER_IN_TEAM : 
+    if len(NAMES) == len(VOTES) and len(SELECTED) == NUMBER_OF_PLAYER_IN_TEAM :
         # if all voted and TurnPlayer selected Team to go mission
         Result={'Yes':y,'No':n}
         print('All Voted.',Result)
-        
-        if y > n :   # If Vote accepted 
+
+        if y > n :   # If Vote accepted
+
+            await Send({"timer":Timer},"accepted_vote")
+            print('Timer start')
+            time.sleep(Timer)
+            print('Timer done')
             success= 0
             failure= 0
             for name in SELECTED :
                 if DECIDE[name] == 0 and FACTION[name] == 0:  # If player voted Fail and is Spy
-            # DECIDE=>Failure=0 Success=1   FACTION=>Revolutionary=1 Spy=0 
+            # DECIDE=>Failure=0 Success=1   FACTION=>Revolutionary=1 Spy=0
                     failure +=1
                 else :
                     success +=1
             Result['Success']=success
             Result['Failure']=failure
-            
 
-        
-        
+
+
+
         await Send(Result,'vote_result')
         Turn = (Turn+2) % len(NAMES) -1 # Next player
         await Send(NAMES[Turn],'turn')
         VOTES=dict()
+        SELECTED=list()
+        await Send(SELECTED,'selected')
+        await Send(VOTES,'votes')
     ############################
-    
+
 async def MainLoop(websocket, path): ## Every player start here.
 
     await websocket.send(json.dumps({'type': 'connected'}))
-    global SELECTED 
+    global SELECTED
     await Send(NAMES,'names')
     if not GameStarted:
         await register(websocket)
-    name = NAMES[USERS.index(websocket)] # Current player name 
+    name = NAMES[USERS.index(websocket)] # Current player name
     try:
         async for message in websocket: # For each message received by the UI
             data = json.loads(message)
@@ -188,7 +196,5 @@ async def MainLoop(websocket, path): ## Every player start here.
     finally:
         await unregister(websocket)
 
-asyncio.get_event_loop().run_until_complete(websockets.serve(MainLoop, 'localhost', SERVER_PORT))
+asyncio.get_event_loop().run_until_complete(websockets.serve(MainLoop, '0.0.0.0', SERVER_PORT))
 asyncio.get_event_loop().run_forever()
-
-
