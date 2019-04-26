@@ -1,7 +1,7 @@
 # Intruder Game
 
 A web based game, very cheerished by OpenMindsClub members.
-The rules of the game can be seen [here](https://en.m.wikipedia.org/wiki/The_Resistanc(game))
+The rules of the game can be seen [here](https://en.m.wikipedia.org/wiki/The_Resistance_(game))
 
 ## Game server
 Install dependencies
